@@ -1,0 +1,13 @@
+{% extends 'test.html.twig' %}
+
+{% block body %}
+    Hello first page...
+
+    {{ dump(pages) }}
+    {% embed "site/_breadcrumb.html.twig" %}
+        {% block crumblist %}
+            <li class="breadcrumb-item active" aria-current="page">Draw history</li>
+        {% endblock %}
+    {% endembed %}
+
+{%  endblock %}
