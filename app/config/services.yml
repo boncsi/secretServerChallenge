@@ -22,8 +22,19 @@ services:
         # but if a service is unused, it's removed anyway
         exclude: '../../src/AppBundle/{Entity,Repository,Tests}'
 
+    SecretServerBundle\:
+        resource: '../../src/SecretServerBundle/*'
+        # you can exclude directories or files
+        # but if a service is unused, it's removed anyway
+        exclude: '../../src/SecretServerBundle/{Entity,Repository,Tests}'
+        tags: [ controller.service_arguments ]
+
     AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller'
+        public: true
+
+    SecretServerBundle\Controller\:
+        resource: '../../src/SecretServerBundle/Controller'
         public: true
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
