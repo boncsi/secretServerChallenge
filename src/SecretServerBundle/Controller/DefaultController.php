@@ -3,10 +3,9 @@
 namespace SecretServerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use SecretServerBundle\Entity\Secret;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use SecretServerBundle\Service\SecretService;
 
 class DefaultController extends Controller
@@ -24,7 +23,16 @@ class DefaultController extends Controller
      */
     public function getSecretAction($hash, SecretService $secretService)
     {
-        return $secretService->getSecretByHash($hash);
+        $response         = new JsonResponse();
+        $secretItemByHash = $secretService->getSecretByHash($hash);
+
+        if (empty($secretItemByHash) === FALSE) {
+            $response->setData($secretItemByHash);
+
+            return $response;
+        }
+
+        return $response->setStatusCode(404);
     }
 
     /**
@@ -32,6 +40,15 @@ class DefaultController extends Controller
      */
     public function secretAction(Request $request, SecretService $secretService)
     {
-        return $secretService->createNew($request);
+        $response      = new JsonResponse();
+        $newSecretItem = $secretService->createNew($request);
+
+        if (empty($newSecretItem) === FALSE) {
+            $response->setData($newSecretItem);
+
+            return $response;
+        }
+
+        return $response->setStatusCode(405);
     }
 }

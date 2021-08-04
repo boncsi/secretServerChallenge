@@ -34,15 +34,23 @@ class SecretService
         $this->_secretRepository = $this->_entityManager->getRepository("SecretServerBundle:Secret");
     }
 
+
+    /**
+     * Get list secret items
+     *
+     * @return array
+     */
     public function getListItems()
     {
         return $this->_secretRepository->getAllSecretItem();
     }
 
+    /**
+     * @param Request $request
+     * @return array|null
+     */
     public function createNew(Request $request)
     {
-        $response = new JsonResponse();
-
         try {
             /* @var $secretItem Secret */
             $secretItem = $this->_secretRepository->addNew(
@@ -53,18 +61,23 @@ class SecretService
                 ]
             );
 
-            $response->setData($this->getFilledData($secretItem));
+            $newSecretItem = $this->getFilledData($secretItem);
         } catch (\Exception $e) {
-            $response->setStatusCode(405);
+            $newSecretItem = NULL;
         }
 
-        return $response;
+        return $newSecretItem;
     }
 
+    /**
+     * Get secret item by hash
+     *
+     * @param   string   $hash
+     *
+     * @return array
+     */
     public function getSecretByHash($hash)
     {
-        $response = new JsonResponse();
-
         try {
             /* @var $secretItem Secret */
             $secretItem = $this->_secretRepository->getSecretByHash($hash);
@@ -83,14 +96,24 @@ class SecretService
                 throw new \Exception('Expired - RemainingViews!');
             }
 
-            $response->setData($this->getFilledData($this->_secretRepository->reduceRemainingViewsCount($secretItem)));
+            $secret = $this->getFilledData($this->_secretRepository->reduceRemainingViewsCount($secretItem));
         } catch (\Exception $e) {
-            $response->setStatusCode(404);
+            $secret = [];
         }
 
-        return $response;
+        return $secret;
     }
 
+    /**
+     * Get Expires at data time.
+     * It's use created at param.
+     *
+     * @param Secret $secretItem
+     *
+     * @return \DateTime
+     *
+     * @throws \Exception
+     */
     public function getExpiresAtDateTime(Secret $secretItem)
     {
         $expiresAt = new \DateTime($secretItem->getCreatedAt()->format('Y-m-d H:i:s'));
@@ -98,6 +121,15 @@ class SecretService
         return $expiresAt->modify("+{$secretItem->getExpiresAt()} minutes");
     }
 
+    /**
+     * Get secret itme filled data.
+     *
+     * @param Secret $secretItem
+     *
+     * @return array
+     *
+     * @throws \Exception
+     */
     public function getFilledData(Secret $secretItem)
     {
         return [
