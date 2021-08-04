@@ -5,12 +5,13 @@ namespace SecretServerBundle\Service;
 use SecretServerBundle\Repository\SecretRepository;
 use SecretServerBundle\Entity\Secret;
 use Doctrine\ORM\EntityManagerInterface;
+use SecretServerBundle\Util\SecretInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * SecretService
  */
-class SecretService
+class SecretService implements SecretInterface
 {
     /**
      * Entity Manager

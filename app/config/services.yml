@@ -43,3 +43,8 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    secret_service:
+        class: SecretServerBundle\Service\SecretService
+
+    SecretServerBundle\Util\SecretInterface: '@secret_service'
