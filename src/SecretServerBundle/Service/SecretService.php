@@ -5,7 +5,6 @@ namespace SecretServerBundle\Service;
 use SecretServerBundle\Repository\SecretRepository;
 use SecretServerBundle\Entity\Secret;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -33,7 +32,6 @@ class SecretService
         $this->_entityManager    = $entityManager;
         $this->_secretRepository = $this->_entityManager->getRepository("SecretServerBundle:Secret");
     }
-
 
     /**
      * Get list secret items
