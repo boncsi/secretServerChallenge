@@ -15,6 +15,7 @@ class DefaultControllerTest extends WebTestCase
     {
         static::bootKernel();
 
+        /* @var EntityManagerInterface $entityManager */
         $entityManager = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         $secretItem    = new Secret();
 
