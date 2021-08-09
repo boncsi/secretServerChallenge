@@ -9,6 +9,8 @@ use SecretServerBundle\Service\SecretService;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManager;
 
 class SecretServerBuilderTest extends TestCase
 {
@@ -39,7 +41,7 @@ class SecretServerBuilderTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->_entityManager = $this->getMockBuilder(ObjectManager::class)
+        $this->_entityManager = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -52,9 +54,11 @@ class SecretServerBuilderTest extends TestCase
             ->method('getSecret')
             ->will($this->returnValue('Secret string'));
 
+        $now = new \DateTime();
+
         $secretServerEntity->expects($this->once())
             ->method('getCreatedAt')
-            ->will($this->returnValue(new \DateTime()));
+            ->will($this->returnValue($now));
 
         $secretServerEntity->expects($this->once())
             ->method('getExpiresAt')
@@ -71,11 +75,11 @@ class SecretServerBuilderTest extends TestCase
         $secretServerRepository = $this->_secretServerRepository;
 
         $secretServerRepository->expects($this->once())
-            ->method('getSecretByHash')
+            ->method('findOneBy')
             ->will($this->returnValue($this->_secretServerEntity));
 
         $secretServerRepository->expects($this->once())
-            ->method('findOneBy')
+            ->method('getSecretByHash')
             ->will($this->returnValue($this->_secretServerEntity));
 
         $entityManager = $this->_entityManager;
@@ -85,13 +89,15 @@ class SecretServerBuilderTest extends TestCase
 
         $secretService = new SecretService($entityManager);
         $secretItem    = $secretService->getSecretByHash('asddewerfsdfewr2342bfdfgb46');
-        $result        = $secretService->getFilledData($secretItem);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result['hash']);
-        $this->assertNotEmpty($result['secretText']);
-        $this->assertNotEmpty($result['createdAt']);
-        $this->assertNotEmpty($result['expiresAt']);
-        $this->assertNotEmpty($result['remainingViews']);
+        $this->assertIsArray($secretItem);
+
+        $this->assertTrue(empty($secretItem) === FALSE);
+
+        $this->assertNotEmpty($secretItem['hash'] ?? NULL);
+        $this->assertNotEmpty($secretItem['secretText'] ?? NULL);
+        $this->assertNotEmpty($secretItem['createdAt'] ?? NULL);
+        $this->assertNotEmpty($secretItem['expiresAt'] ?? NULL);
+        $this->assertNotEmpty($secretItem['remainingViews'] ?? NULL);
     }
 }
