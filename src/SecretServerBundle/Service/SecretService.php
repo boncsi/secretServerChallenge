@@ -2,11 +2,12 @@
 
 namespace SecretServerBundle\Service;
 
+use Symfony\Component\HttpFoundation\Request;
+
 use SecretServerBundle\Repository\SecretRepository;
 use SecretServerBundle\Entity\Secret;
-use Doctrine\Common\Persistence\ObjectManager;
-use SecretServerBundle\Util\SecretInterface;
-use Symfony\Component\HttpFoundation\Request;
+use SecretServerBundle\Util\Service\SecretInterface;
+use SecretServerBundle\Util\Repository\SecretRepositoryInterface;
 
 /**
  * SecretService
@@ -14,24 +15,18 @@ use Symfony\Component\HttpFoundation\Request;
 class SecretService implements SecretInterface
 {
     /**
-     * Entity Manager
-     * @param ObjectManager $_entityManager
-     */
-    private $_entityManager;
-
-    /**
      * @var SecretRepository
      */
     private $_secretRepository;
 
     /**
      * SecretService constructor.
-     * @param ObjectManager $entityManager
+     *
+     * @param SecretRepository $secretRepository
      */
-    public function __construct(ObjectManager $entityManager)
+    public function __construct(SecretRepositoryInterface $secretRepository)
     {
-        $this->_entityManager    = $entityManager;
-        $this->_secretRepository = $this->_entityManager->getRepository("SecretServerBundle:Secret");
+        $this->_secretRepository = $secretRepository;
     }
 
     /**
@@ -39,7 +34,7 @@ class SecretService implements SecretInterface
      *
      * @return array
      */
-    public function getListItems()
+    public function getListItems() : array
     {
         return $this->_secretRepository->getAllSecretItem();
     }
@@ -48,7 +43,7 @@ class SecretService implements SecretInterface
      * @param Request $request
      * @return array|null
      */
-    public function createNew(Request $request)
+    public function createNew(Request $request) : array
     {
         try {
             /* @var $secretItem Secret */
@@ -75,7 +70,7 @@ class SecretService implements SecretInterface
      *
      * @return array
      */
-    public function getSecretByHash($hash)
+    public function getSecretByHash(string $hash) : array
     {
         try {
             /* @var $secretItem Secret */
@@ -113,7 +108,7 @@ class SecretService implements SecretInterface
      *
      * @throws \Exception
      */
-    public function getExpiresAtDateTime(Secret $secretItem)
+    protected function getExpiresAtDateTime(Secret $secretItem)
     {
         $expiresAt = new \DateTime($secretItem->getCreatedAt()->format('Y-m-d H:i:s'));
 
@@ -129,7 +124,7 @@ class SecretService implements SecretInterface
      *
      * @throws \Exception
      */
-    public function getFilledData(Secret $secretItem)
+    protected function getFilledData(Secret $secretItem)
     {
         return [
             'hash'           => $secretItem->getHash(),
