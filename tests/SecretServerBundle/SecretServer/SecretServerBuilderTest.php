@@ -68,11 +68,12 @@ class SecretServerBuilderTest extends TestCase
             ->method('getSecretByHash')
             ->will($this->returnValue($this->_secretServerEntity));
 
+        $secretServerRepository->expects($this->any())
+            ->method('reduceRemainingViewsCount')
+            ->will($this->returnValue($this->_secretServerEntity));
+
         $secretService = new SecretService($secretServerRepository);
         $secretItem    = $secretService->getSecretByHash('asddewerfsdfewr2342bfdfgb46');
-
-        var_dump($secretItem);
-        die();
 
         $this->assertIsArray($secretItem);
 
