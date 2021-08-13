@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="741871b5-3a5c-496f-8519-dcd6687fb54d" name="Changes" comment="phpstorm changes" />
-    <list default="true" id="913cbbf5-2578-47f0-8398-a112eb25fa70" name="Changes" comment="phpstorm changes" />
+    <list default="true" id="741871b5-3a5c-496f-8519-dcd6687fb54d" name="Changes" comment="phpstorm changes">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021__08__13__12_21__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021__08__13__12_21__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.phpunit.result.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.phpunit.result.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/Service/SecretService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/Service/SecretService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/Util/Repository/SecretRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/Util/Repository/SecretRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/SecretServerBundle/Controller/DefaultControllerTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/SecretServerBundle/SecretServer/SecretServerBuilderTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/SecretServerBundle/SecretServer/SecretServerBuilderTest.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +22,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="live" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -78,6 +85,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>

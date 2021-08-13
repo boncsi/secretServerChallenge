@@ -7,11 +7,6 @@ use SecretServerBundle\Entity\Secret;
 use SecretServerBundle\Repository\SecretRepository;
 use SecretServerBundle\Service\SecretService;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\EntityManager;
-
 class SecretServerBuilderTest extends TestCase
 {
     /**
@@ -24,11 +19,6 @@ class SecretServerBuilderTest extends TestCase
      */
     private $_secretServerEntity;
 
-    /**
-     * @var ObjectManager|MockObject
-     */
-    private $_entityManager;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -40,21 +30,18 @@ class SecretServerBuilderTest extends TestCase
         $this->_secretServerRepository = $this->getMockBuilder(SecretRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-        $this->_entityManager = $this->getMockBuilder(EntityManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 
    public function testGetFilledData()
     {
-        $secretServerEntity = $this->_secretServerEntity;
+        $now                    = new \DateTime();
+        $secretServerEntity     = $this->_secretServerEntity;
+        $secretServerRepository = $this->_secretServerRepository;
 
+        /*Settings secret entity mock*/
         $secretServerEntity->expects($this->once())
             ->method('getSecret')
             ->will($this->returnValue('Secret string'));
-
-        $now = new \DateTime();
 
         $secretServerEntity->expects($this->once())
             ->method('getCreatedAt')
@@ -72,8 +59,7 @@ class SecretServerBuilderTest extends TestCase
             ->method('getRemainingViews')
             ->will($this->returnValue(10));
 
-        $secretServerRepository = $this->_secretServerRepository;
-
+        /*Settings secret repository mock*/
         $secretServerRepository->expects($this->once())
             ->method('findOneBy')
             ->will($this->returnValue($this->_secretServerEntity));
@@ -82,13 +68,11 @@ class SecretServerBuilderTest extends TestCase
             ->method('getSecretByHash')
             ->will($this->returnValue($this->_secretServerEntity));
 
-        $entityManager = $this->_entityManager;
-        $entityManager->expects($this->once())
-            ->method('getRepository')
-            ->will($this->returnValue($secretServerRepository));
-
-        $secretService = new SecretService($entityManager);
+        $secretService = new SecretService($secretServerRepository);
         $secretItem    = $secretService->getSecretByHash('asddewerfsdfewr2342bfdfgb46');
+
+        var_dump($secretItem);
+        die();
 
         $this->assertIsArray($secretItem);
 
