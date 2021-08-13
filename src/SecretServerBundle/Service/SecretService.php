@@ -108,8 +108,12 @@ class SecretService implements SecretInterface
      *
      * @throws \Exception
      */
-    protected function getExpiresAtDateTime(Secret $secretItem)
+    protected function getExpiresAtDateTime(Secret $secretItem) : \DateTime
     {
+        if (empty($secretItem->getExpiresAt())) {
+            return $secretItem->getCreatedAt();
+        }
+
         $expiresAt = new \DateTime($secretItem->getCreatedAt()->format('Y-m-d H:i:s'));
 
         return $expiresAt->modify("+{$secretItem->getExpiresAt()} minutes");
@@ -124,7 +128,7 @@ class SecretService implements SecretInterface
      *
      * @throws \Exception
      */
-    protected function getFilledData(Secret $secretItem)
+    protected function getFilledData(Secret $secretItem) : array
     {
         return [
             'hash'           => $secretItem->getHash(),
