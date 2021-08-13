@@ -47,4 +47,10 @@ services:
     secret_service:
         class: SecretServerBundle\Service\SecretService
 
-    SecretServerBundle\Util\SecretInterface: '@secret_service'
+    SecretServerBundle\Util\Service\SecretInterface: '@secret_service'
+
+    secret_repository:
+        class: SecretServerBundle\Repository\SecretRepository
+        arguments: ['@doctrine.orm.entity_manager']
+
+    SecretServerBundle\Util\Repository\SecretRepositoryInterface: '@secret_repository'
