@@ -7,11 +7,6 @@ use SecretServerBundle\Entity\Secret;
 use SecretServerBundle\Repository\SecretRepository;
 use SecretServerBundle\Service\SecretService;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\EntityManager;
-
 class SecretServerBuilderTest extends TestCase
 {
     /**
@@ -24,11 +19,6 @@ class SecretServerBuilderTest extends TestCase
      */
     private $_secretServerEntity;
 
-    /**
-     * @var ObjectManager|MockObject
-     */
-    private $_entityManager;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -40,54 +30,49 @@ class SecretServerBuilderTest extends TestCase
         $this->_secretServerRepository = $this->getMockBuilder(SecretRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-        $this->_entityManager = $this->getMockBuilder(EntityManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 
    public function testGetFilledData()
     {
-        $secretServerEntity = $this->_secretServerEntity;
+        $now                    = new \DateTime();
+        $secretServerEntity     = $this->_secretServerEntity;
+        $secretServerRepository = $this->_secretServerRepository;
 
-        $secretServerEntity->expects($this->once())
+        /*Settings secret entity mock*/
+        $secretServerEntity->expects($this->any())
             ->method('getSecret')
             ->will($this->returnValue('Secret string'));
 
-        $now = new \DateTime();
-
-        $secretServerEntity->expects($this->once())
+        $secretServerEntity->expects($this->any())
             ->method('getCreatedAt')
             ->will($this->returnValue($now));
 
-        $secretServerEntity->expects($this->once())
+        $secretServerEntity->expects($this->any())
             ->method('getExpiresAt')
-            ->will($this->returnValue(200));
+            ->will($this->returnValue(0));
 
-        $secretServerEntity->expects($this->once())
+        $secretServerEntity->expects($this->any())
             ->method('getHash')
             ->will($this->returnValue('asddewerfsdfewr2342bfdfgb46'));
 
-        $secretServerEntity->expects($this->once())
+        $secretServerEntity->expects($this->any())
             ->method('getRemainingViews')
             ->will($this->returnValue(10));
 
-        $secretServerRepository = $this->_secretServerRepository;
-
-        $secretServerRepository->expects($this->once())
+        /*Settings secret repository mock*/
+        $secretServerRepository->expects($this->any())
             ->method('findOneBy')
             ->will($this->returnValue($this->_secretServerEntity));
 
-        $secretServerRepository->expects($this->once())
+        $secretServerRepository->expects($this->any())
             ->method('getSecretByHash')
             ->will($this->returnValue($this->_secretServerEntity));
 
-        $entityManager = $this->_entityManager;
-        $entityManager->expects($this->once())
-            ->method('getRepository')
-            ->will($this->returnValue($secretServerRepository));
+        $secretServerRepository->expects($this->any())
+            ->method('reduceRemainingViewsCount')
+            ->will($this->returnValue($this->_secretServerEntity));
 
-        $secretService = new SecretService($entityManager);
+        $secretService = new SecretService($secretServerRepository);
         $secretItem    = $secretService->getSecretByHash('asddewerfsdfewr2342bfdfgb46');
 
         $this->assertIsArray($secretItem);
