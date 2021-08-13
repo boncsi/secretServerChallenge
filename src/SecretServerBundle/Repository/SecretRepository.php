@@ -12,7 +12,7 @@ use SecretServerBundle\Entity\Secret;
  */
 class SecretRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function addNew($post)
+    public function addNew(array $post)
     {
         $queryBuilder  = $this->createQueryBuilder('*');
         $entityManager = $queryBuilder->getEntityManager();
@@ -31,7 +31,8 @@ class SecretRepository extends \Doctrine\ORM\EntityRepository
         return $secretEntity;
     }
 
-    public function getSecretByHash($hash) {
+    public function getSecretByHash($hash)
+    {
         return $this->findOneBy(["hash" => $hash]);
     }
 
