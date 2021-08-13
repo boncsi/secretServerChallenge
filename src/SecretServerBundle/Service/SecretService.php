@@ -4,7 +4,7 @@ namespace SecretServerBundle\Service;
 
 use SecretServerBundle\Repository\SecretRepository;
 use SecretServerBundle\Entity\Secret;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use SecretServerBundle\Util\SecretInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,7 +15,7 @@ class SecretService implements SecretInterface
 {
     /**
      * Entity Manager
-     * @param EntityManagerInterface $_entityManager
+     * @param ObjectManager $_entityManager
      */
     private $_entityManager;
 
@@ -26,9 +26,9 @@ class SecretService implements SecretInterface
 
     /**
      * SecretService constructor.
-     * @param EntityManagerInterface $entityManager
+     * @param ObjectManager $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ObjectManager $entityManager)
     {
         $this->_entityManager    = $entityManager;
         $this->_secretRepository = $this->_entityManager->getRepository("SecretServerBundle:Secret");
