@@ -39,32 +39,32 @@ class SecretServerBuilderTest extends TestCase
         $secretServerRepository = $this->_secretServerRepository;
 
         /*Settings secret entity mock*/
-        $secretServerEntity->expects($this->once())
+        $secretServerEntity->expects($this->any())
             ->method('getSecret')
             ->will($this->returnValue('Secret string'));
 
-        $secretServerEntity->expects($this->once())
+        $secretServerEntity->expects($this->any())
             ->method('getCreatedAt')
             ->will($this->returnValue($now));
 
-        $secretServerEntity->expects($this->once())
+        $secretServerEntity->expects($this->any())
             ->method('getExpiresAt')
-            ->will($this->returnValue(200));
+            ->will($this->returnValue(0));
 
-        $secretServerEntity->expects($this->once())
+        $secretServerEntity->expects($this->any())
             ->method('getHash')
             ->will($this->returnValue('asddewerfsdfewr2342bfdfgb46'));
 
-        $secretServerEntity->expects($this->once())
+        $secretServerEntity->expects($this->any())
             ->method('getRemainingViews')
             ->will($this->returnValue(10));
 
         /*Settings secret repository mock*/
-        $secretServerRepository->expects($this->once())
+        $secretServerRepository->expects($this->any())
             ->method('findOneBy')
             ->will($this->returnValue($this->_secretServerEntity));
 
-        $secretServerRepository->expects($this->once())
+        $secretServerRepository->expects($this->any())
             ->method('getSecretByHash')
             ->will($this->returnValue($this->_secretServerEntity));
 
