@@ -12,7 +12,7 @@ use SecretServerBundle\Entity\Secret;
  */
 class SecretRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function addNew($post)
+    public function addNew(array $post)
     {
         $queryBuilder  = $this->createQueryBuilder('*');
         $entityManager = $queryBuilder->getEntityManager();
