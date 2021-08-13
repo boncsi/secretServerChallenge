@@ -31,7 +31,8 @@ class SecretRepository extends \Doctrine\ORM\EntityRepository
         return $secretEntity;
     }
 
-    public function getSecretByHash($hash) {
+    public function getSecretByHash($hash)
+    {
         return $this->findOneBy(["hash" => $hash]);
     }
 
