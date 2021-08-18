@@ -67,12 +67,12 @@ class SecretRepository extends \Doctrine\ORM\EntityRepository implements SecretR
     //    return $secretEntity;
     //}
 
-    //public function getAllSecretItem() : array
-    //{
-    //    $query = $this->createQueryBuilder('s')
-    //        ->orderBy('s.id', 'DESC')
-    //        ->getQuery();
+    public function getAllSecretItem() : array
+    {
+        $query = $this->createQueryBuilder('s')
+            ->orderBy('s.id', 'DESC')
+            ->getQuery();
 
-    //    return $query->getArrayResult();
-    //}
+        return $query->getArrayResult();
+    }
 }

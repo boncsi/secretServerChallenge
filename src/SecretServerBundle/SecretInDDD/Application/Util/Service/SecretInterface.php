@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface SecretInterface
 {
-    //public function getListItems() : array;
+    public function getListItems() : array;
 
     public function createNew(Request $request) : ?array;
 

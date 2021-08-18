@@ -16,6 +16,8 @@ use SecretServerBundle\SecretInDDD\Domain\VO\SecretCreatedAtVO as SecretCreatedA
 use \DateTimeImmutable;
 use SecretServerBundle\SecretInDDD\Domain\Assembler\SecretAssembler;
 use SecretServerBundle\SecretInDDD\Domain\Util\DTO\SecretDTOInterface;
+use SecretServerBundle\SecretInDDD\Domain\DTO\SecretDTO;
+use SecretServerBundle\SecretInDDD\Domain\DTO\SecretFormattedAndFilledDTO;
 
 /**
  * SecretService
@@ -42,9 +44,36 @@ class SecretService implements SecretInterface
      *
      * @return array
      */
-    public function getListItems() : array
+    public function getAll() : array
     {
-        return $this->_secretRepository->getAllSecretItem();
+        $allSecret          = $this->_secretRepository->getAllSecretItem();
+        $allFormattedSecret = [];
+
+        if (empty($allSecret) === TRUE) {
+            return $allFormattedSecret;
+        }
+
+        foreach ($allSecret as $secret) {
+            $secretDTO                   = new SecretDTO();
+            $secretFormattedAndFilledDTO = new SecretFormattedAndFilledDTO();
+
+            $secretDTO->setId((int) $secret['id']);
+            $secretDTO->setHash($secret['hash']);
+            $secretDTO->setSecret($secret['secret']);
+            $secretDTO->setRemainingViews((int) $secret['remainingViews']);
+            $secretDTO->setExpiresAt((int) $secret['expiresAt']);
+            $secretDTO->setCreatedAt(new DateTimeImmutable($secret['createdAt']->format('Y-m-d H:i:s')));
+
+            $secretFormattedAndFilledDTO->setHash($secretDTO->getHash());
+            $secretFormattedAndFilledDTO->setSecret($secretDTO->getSecret());
+            $secretFormattedAndFilledDTO->setCreatedAt($secretDTO->getCreatedAt()->format('Y-m-d\TH-i-s.\0\0\0\Z'));
+            $secretFormattedAndFilledDTO->setExpiresAt($this->getExpiresAtDateTime($secretDTO)->format('Y-m-d\TH-i-s.\0\0\0\Z'));
+            $secretFormattedAndFilledDTO->setRemainingViews($secretDTO->getRemainingViews());
+
+            $allFormattedSecret[] = $secretFormattedAndFilledDTO;
+        }
+
+        return $allFormattedSecret;
     }
 
     /**

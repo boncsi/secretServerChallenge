@@ -31,7 +31,7 @@ class SecretSecretVO implements ValueObjectInterface
      */
     private function _checkBeforeChange(string $secret) : void
     {
-        if (!preg_match('/^[ áÁéÉűŰőŐúÚóÓüÜöÖA-Za-z\;\.\/]+$/', $secret)) {
+        if (!preg_match('/^[ !áÁéÉűŰőŐúÚóÓüÜöÖA-Za-z\;\.\/]+$/', $secret)) {
             throw new InvalidArgumentException();
         }
     }

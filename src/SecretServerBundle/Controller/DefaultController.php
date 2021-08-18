@@ -13,10 +13,10 @@ class DefaultController extends Controller
     /**
      * @Route("/secret/list", name="getSecretList", methods={"GET","HEAD", "OPTIONS"})
      */
-    /*public function listAction(SecretInterface $secretService)
+    public function listAction(SecretInterface $secretService)
     {
         return $this->render('secret/list.html.twig', ['secretItems' => $secretService->getListItems()]);
-    }*/
+    }
 
     /**
      * @Route("/secret/{hash}", name="getSecretByHash", methods={"GET","HEAD", "OPTIONS"})

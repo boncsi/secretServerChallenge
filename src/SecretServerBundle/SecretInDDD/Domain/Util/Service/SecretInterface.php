@@ -7,7 +7,7 @@ use SecretServerBundle\SecretInDDD\Domain\Util\DTO\SecretDTOInterface;
 
 interface SecretInterface
 {
-    //public function getListItems() : array;
+    public function getAll() : array;
 
     public function createNew(SecretVO $secretVO) : SecretDTOInterface;
 

@@ -40,13 +40,13 @@ class SecretService implements SecretInterface
      *
      * @return array
      */
-    /*public function getListItems() : array
+    public function getListItems() : array
     {
-        return $this->_secretRepository->getAllSecretItem();
-    }*/
+        return $this->_domainSecretService->getAll();
+    }
 
     /**
-     * @param Request $request
+     * @param Request $requestr
      * @return ?array
      */
     public function createNew(Request $request) : ?array
