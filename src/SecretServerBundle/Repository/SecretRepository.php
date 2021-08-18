@@ -2,9 +2,12 @@
 
 namespace SecretServerBundle\Repository;
 
-use SecretServerBundle\Util\Repository\SecretRepositoryInterface;
-use SecretServerBundle\Entity\Secret;
 use Doctrine\ORM\EntityManagerInterface;
+use SecretServerBundle\SecretInDDD\Domain\Util\Repository\SecretRepositoryInterface;
+use SecretServerBundle\SecretInDDD\Domain\Util\Model\SecretModelInterface;
+use SecretServerBundle\Entity\Secret;
+use SecretServerBundle\SecretInDDD\Domain\VO\SecretVO;
+use \DateTimeImmutable;
 
 /**
  * SecretRepository
@@ -19,45 +22,17 @@ class SecretRepository extends \Doctrine\ORM\EntityRepository implements SecretR
         parent::__construct($entityManager, $entityManager->getClassMetadata(Secret::class));
     }
 
-    public function addNew(array $post) : Secret
+    public function addNew(SecretVO $secretVO) : SecretModelInterface
     {
         $queryBuilder  = $this->createQueryBuilder('*');
         $entityManager = $queryBuilder->getEntityManager();
         $secretEntity  = new Secret();
-        $createAtDate  = new \DateTime();
 
-        $secretEntity->setSecret(empty($post['secret']) ? NULL : $post['secret']);
-        $secretEntity->setHash(uniqid('se-' . md5(rand(1, 99999999)) . '-'));
-        $secretEntity->setRemainingViews($post['remainingViews']);
-        $secretEntity->setCreatedAt($createAtDate);
-        $secretEntity->setExpiresAt($post['expiresAt']);
-
-        $entityManager->persist($secretEntity);
-        $entityManager->flush();
-
-        return $secretEntity;
-    }
-
-    public function getSecretByHash($hash) : Secret
-    {
-        /** @var Secret $secretItem */
-        $secretItem = $this->findOneBy(["hash" => $hash]);
-
-        return $secretItem;
-    }
-
-    public function reduceRemainingViewsCount(Secret $secretEntity) : Secret
-    {
-        $actualRemainingViewsCount = $secretEntity->getRemainingViews();
-
-        if ($actualRemainingViewsCount == 1) {
-            $secretEntity->setRemainingViews(-1);
-        } elseif ($actualRemainingViewsCount > 1) {
-            $secretEntity->setRemainingViews(--$actualRemainingViewsCount);
-        }
-
-        $queryBuilder  = $this->createQueryBuilder('*');
-        $entityManager = $queryBuilder->getEntityManager();
+        $secretEntity->setSecret($secretVO->getSecret()->getValue());
+        $secretEntity->setHash($secretVO->getHash()->getValue());
+        $secretEntity->setRemainingViews($secretVO->getRemainingViews()->getValue());
+        $secretEntity->setCreatedAt(new DateTimeImmutable($secretVO->getSecretCreatedAt()->getValue()));
+        $secretEntity->setExpiresAt($secretVO->getSecretExpiresAt()->getValue());
 
         $entityManager->persist($secretEntity);
         $entityManager->flush();
@@ -65,12 +40,39 @@ class SecretRepository extends \Doctrine\ORM\EntityRepository implements SecretR
         return $secretEntity;
     }
 
-    public function getAllSecretItem() : array
-    {
-        $query = $this->createQueryBuilder('s')
-            ->orderBy('s.id', 'DESC')
-            ->getQuery();
+    //public function getSecretByHash($hash) : Secret
+    //{
+    //    /** @var Secret $secretItem */
+    //    $secretItem = $this->findOneBy(["hash" => $hash]);
 
-        return $query->getArrayResult();
-    }
+    //     return $secretItem;
+    //}
+
+    //public function reduceRemainingViewsCount(Secret $secretEntity) : Secret
+    //{
+    //    $actualRemainingViewsCount = $secretEntity->getRemainingViews();
+
+    //    if ($actualRemainingViewsCount == 1) {
+    //        $secretEntity->setRemainingViews(-1);
+    //    } elseif ($actualRemainingViewsCount > 1) {
+    //        $secretEntity->setRemainingViews(--$actualRemainingViewsCount);
+    //    }
+
+    //    $queryBuilder  = $this->createQueryBuilder('*');
+    //    $entityManager = $queryBuilder->getEntityManager();
+
+    //    $entityManager->persist($secretEntity);
+    //    $entityManager->flush();
+
+    //    return $secretEntity;
+    //}
+
+    //public function getAllSecretItem() : array
+    //{
+    //    $query = $this->createQueryBuilder('s')
+    //        ->orderBy('s.id', 'DESC')
+    //        ->getQuery();
+
+    //    return $query->getArrayResult();
+    //}
 }

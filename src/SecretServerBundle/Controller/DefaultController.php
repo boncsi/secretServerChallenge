@@ -6,22 +6,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use SecretServerBundle\Util\Service\SecretInterface;
+use SecretServerBundle\SecretInDDD\Application\Util\Service\SecretInterface;
 
 class DefaultController extends Controller
 {
     /**
      * @Route("/secret/list", name="getSecretList", methods={"GET","HEAD", "OPTIONS"})
      */
-    public function listAction(SecretInterface $secretService)
+    /*public function listAction(SecretInterface $secretService)
     {
         return $this->render('secret/list.html.twig', ['secretItems' => $secretService->getListItems()]);
-    }
+    }*/
 
     /**
      * @Route("/secret/{hash}", name="getSecretByHash", methods={"GET","HEAD", "OPTIONS"})
      */
-    public function getSecretAction($hash, SecretInterface $secretService)
+    /*public function getSecretAction($hash, SecretInterface $secretService)
     {
         $response         = new JsonResponse();
         $secretItemByHash = $secretService->getSecretByHash($hash);
@@ -33,7 +33,7 @@ class DefaultController extends Controller
         }
 
         return $response->setStatusCode(404);
-    }
+    }*/
 
     /**
      * @Route("/secret", name="addNewSecret", methods={"POST","HEAD", "OPTIONS"})
