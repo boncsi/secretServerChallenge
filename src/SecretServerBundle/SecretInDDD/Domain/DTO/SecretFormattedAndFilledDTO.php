@@ -1,67 +1,52 @@
 <?php
 
-namespace SecretServerBundle\Entity;
+namespace SecretServerBundle\SecretInDDD\Domain\DTO;
 
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use SecretServerBundle\SecretInDDD\Domain\Util\Model\SecretModelInterface;
+use SecretServerBundle\SecretInDDD\Domain\Util\DTO\SecretDTOInterface;
 
-/**
- * Secret
- *
- * @ORM\Table(name="secret")
- * @ORM\Entity(repositoryClass="SecretServerBundle\Repository\SecretRepository")
- */
-class Secret implements SecretModelInterface
+class SecretFormattedAndFilledDTO implements SecretDTOInterface
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="hash", type="string", length=255, unique=true)
-     * @Assert\NotBlank
      */
     private $hash;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="secret", type="text")
-     * @Assert\NotBlank
      */
     private $secret;
 
     /**
-     * @var \DateTimeImmutable
-     *
-     * @ORM\Column(name="createdAt", type="datetime")
-     * @Assert\NotBlank
+     * @var string
      */
     private $createdAt;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="expiresAt", type="bigint", columnDefinition="BIGINT(32) NOT NULL")
-     * @Assert\NotBlank
+     * @var string
      */
     private $expiresAt;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="remainingViews", type="bigint", columnDefinition="BIGINT(32) NOT NULL")
-     * @Assert\NotBlank
      */
     private $remainingViews;
+
+    /**
+     * Get id
+     *
+     * @param int $id
+     *
+     * @return int
+     */
+    public function setId($id)
+    {
+        return $this->id = $id;
+    }
 
     /**
      * Get id
@@ -78,7 +63,7 @@ class Secret implements SecretModelInterface
      *
      * @param string $hash
      *
-     * @return Secret
+     * @return SecretFormattedAndFilledDTO
      */
     public function setHash($hash)
     {
@@ -102,7 +87,7 @@ class Secret implements SecretModelInterface
      *
      * @param string $secret
      *
-     * @return Secret
+     * @return SecretFormattedAndFilledDTO
      */
     public function setSecret($secret)
     {
@@ -124,9 +109,9 @@ class Secret implements SecretModelInterface
     /**
      * Set createdAt
      *
-     * @param \DateTimeImmutable $createdAt
+     * @param string $createdAt
      *
-     * @return Secret
+     * @return SecretFormattedAndFilledDTO
      */
     public function setCreatedAt($createdAt)
     {
@@ -138,7 +123,7 @@ class Secret implements SecretModelInterface
     /**
      * Get createdAt
      *
-     * @return \DateTimeImmutable
+     * @return string
      */
     public function getCreatedAt()
     {
@@ -148,9 +133,9 @@ class Secret implements SecretModelInterface
     /**
      * Set expiresAt
      *
-     * @param integer $expiresAt
+     * @param string $expiresAt
      *
-     * @return Secret
+     * @return SecretFormattedAndFilledDTO
      */
     public function setExpiresAt($expiresAt)
     {
@@ -162,7 +147,7 @@ class Secret implements SecretModelInterface
     /**
      * Get expiresAt
      *
-     * @return int
+     * @return string
      */
     public function getExpiresAt()
     {
@@ -174,7 +159,7 @@ class Secret implements SecretModelInterface
      *
      * @param integer $remainingViews
      *
-     * @return Secret
+     * @return SecretFormattedAndFilledDTO
      */
     public function setRemainingViews($remainingViews)
     {
@@ -192,5 +177,14 @@ class Secret implements SecretModelInterface
     {
         return $this->remainingViews;
     }
-}
 
+    public function serialize()
+    {
+        return serialize($this);
+    }
+
+    public function unserialize($serializedSecret)
+    {
+        return unserialize($serializedSecret);
+    }
+}

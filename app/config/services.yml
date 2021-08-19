@@ -26,7 +26,7 @@ services:
         resource: '../../src/SecretServerBundle/*'
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
-        exclude: '../../src/SecretServerBundle/{Entity,Repository,Tests}'
+        exclude: '../../src/SecretServerBundle/{Entity,Repository,SecretInDDD,Tests}'
         tags: [ controller.service_arguments ]
 
     AppBundle\Controller\:
@@ -44,13 +44,26 @@ services:
     #     arguments:
     #         $someArgument: 'some_value'
 
-    secret_service:
-        class: SecretServerBundle\Service\SecretService
-
-    SecretServerBundle\Util\Service\SecretInterface: '@secret_service'
-
+    #Framework layer
     secret_repository:
         class: SecretServerBundle\Repository\SecretRepository
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: [ '@doctrine.orm.entity_manager' ]
 
-    SecretServerBundle\Util\Repository\SecretRepositoryInterface: '@secret_repository'
+    SecretServerBundle\SecretInDDD\Domain\Util\Repository\SecretRepositoryInterface: '@secret_repository'
+
+    #Application layer
+    application_secret_service:
+        class: SecretServerBundle\SecretInDDD\Application\Service\SecretService
+
+    SecretServerBundle\SecretInDDD\Application\Util\Service\SecretInterface: '@application_secret_service'
+
+    #Domain layer
+    domain_secret_service:
+        class: SecretServerBundle\SecretInDDD\Domain\Service\SecretService
+
+    SecretServerBundle\SecretInDDD\Domain\Util\Service\SecretInterface: '@domain_secret_service'
+
+    #get_set_method_normalizer:
+        #class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+        #tags: [ serializer.normalizer ]
+
