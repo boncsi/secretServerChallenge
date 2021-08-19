@@ -31,7 +31,7 @@ class SecretRemainingViewsVO implements ValueObjectInterface
      */
     private function _checkBeforeChange(int $remainingViews) : void
     {
-        if (!preg_match('/^[1-9][0-9]{1,}$/', $remainingViews)) {
+        if (!preg_match('/^[\-0-9]{1,}$/', $remainingViews)) {
             throw new InvalidArgumentException();
         }
     }

@@ -14,6 +14,8 @@ use SecretServerBundle\SecretInDDD\Domain\VO\SecretExpiresAtVO as SecretExpiresA
 use SecretServerBundle\SecretInDDD\Domain\VO\SecretCreatedAtVO as SecretCreatedAtVO;
 use SecretServerBundle\SecretInDDD\Domain\Assembler\SecretAssembler;
 use SecretServerBundle\SecretInDDD\Domain\DTO\SecretFormattedAndFilledDTO;
+use SecretServerBundle\SecretInDDD\Domain\Util\DTO\SecretDTOInterface;
+use DateTimeImmutable;
 
 /**
  * SecretService
@@ -60,7 +62,7 @@ class SecretService implements SecretInterface
                     new SecretSecretVO(filter_var($request->request->get('secret'), FILTER_SANITIZE_STRING)),
                     new SecretRemainingViewsVO(filter_var($request->request->get('expireAfterViews'), FILTER_VALIDATE_INT)),
                     new SecretExpiresAtVO(filter_var($request->request->get('expireAfter'), FILTER_VALIDATE_INT)),
-                    new SecretCreatedAtVO(new \DateTimeImmutable())
+                    new SecretCreatedAtVO(new DateTimeImmutable())
                 )
             );
 
@@ -84,74 +86,31 @@ class SecretService implements SecretInterface
      *
      * @param   string   $hash
      *
-     * @return array
+     * @return ?array
      */
-    /*public function getSecretByHash(string $hash) : array
+    public function getSecretByHash(string $hash) : ?array
     {
-        try {*/
-            /* @var $secretItem Secret */
-            /*$secretItem = $this->_secretRepository->getSecretByHash($hash);
+        try {
+            /* @var $secretDTO SecretDTOInterface */
+            $secretDTO = $this->_domainSecretService->getByHash($hash);
 
-            if (empty($secretItem)) {
-                throw new \Exception('Not be found!');
-            }
+            $this->_domainSecretService->isExpired($secretDTO);
+            $this->_domainSecretService->isViewable($secretDTO);
 
-            $nowDateTime = new \DateTime();
+            $secretDTO = $this->_domainSecretService->reduceRemainingViewsCount($secretDTO);
 
-            if ($secretItem->getCreatedAt() !== $this->getExpiresAtDateTime($secretItem) && $this->getExpiresAtDateTime($secretItem) < $nowDateTime) {
-                throw new \Exception('Expired - ExpiresAt!');
-            }
+            $secretAssembler             = new SecretAssembler();
+            $secretFormattedAndFilledDTO = new SecretFormattedAndFilledDTO();
 
-            if ($secretItem->getRemainingViews() < 0) {
-                throw new \Exception('Expired - RemainingViews!');
-            }
+            $secretFormattedAndFilledDTO->setHash($secretDTO->getHash());
+            $secretFormattedAndFilledDTO->setSecret($secretDTO->getSecret());
+            $secretFormattedAndFilledDTO->setCreatedAt($secretDTO->getCreatedAt()->format('Y-m-d\TH-i-s.\0\0\0\Z'));
+            $secretFormattedAndFilledDTO->setExpiresAt($this->_domainSecretService->getExpiresAtDateTime($secretDTO)->format('Y-m-d\TH-i-s.\0\0\0\Z'));
+            $secretFormattedAndFilledDTO->setRemainingViews($secretDTO->getRemainingViews());
 
-            $secret = $this->getFilledData($this->_secretRepository->reduceRemainingViewsCount($secretItem));
+            return $secretAssembler->transformDTOToArray($secretFormattedAndFilledDTO);
         } catch (\Exception $e) {
-            $secret = [];
+            return [];
         }
-
-        return $secret;
-    }*/
-
-    /**
-     * Get Expires at data time.
-     * It's use created at param.
-     *
-     * @param Secret $secretItem
-     *
-     * @return \DateTime
-     *
-     * @throws \Exception
-     */
-    /*protected function getExpiresAtDateTime(Secret $secretItem) : \DateTime
-    {
-        if (empty($secretItem->getExpiresAt())) {
-            return $secretItem->getCreatedAt();
-        }
-
-        $expiresAt = new \DateTime($secretItem->getCreatedAt()->format('Y-m-d H:i:s'));
-
-        return $expiresAt->modify("+{$secretItem->getExpiresAt()} minutes");
-    }*/
-
-    /**
-     * Get secret itme filled data.
-     *
-     * @param Secret $secretItem
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    /*protected function getFilledData(Secret $secretItem) : array
-    {
-        return [
-            'hash'           => $secretItem->getHash(),
-            'secretText'     => $secretItem->getSecret(),
-            'createdAt'      => $secretItem->getCreatedAt()->format('Y-m-d\TH-i-s.\0\0\0\Z'),
-            'expiresAt'      => $this->getExpiresAtDateTime($secretItem)->format('Y-m-d\TH-i-s.\0\0\0\Z'),
-            'remainingViews' => $secretItem->getRemainingViews()
-        ];
-    }*/
+    }
 }

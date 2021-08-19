@@ -3,15 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="741871b5-3a5c-496f-8519-dcd6687fb54d" name="Changes" comment="Secret service to ddd (first step)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/secret/list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/secret/list.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/Controller/DefaultController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/Entity/Secret.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/Entity/Secret.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/Repository/SecretRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/Repository/SecretRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Application/Service/SecretService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Application/Service/SecretService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Application/Util/Service/SecretInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Application/Util/Service/SecretInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/DTO/SecretDTO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/DTO/SecretDTO.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/Service/SecretService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/Service/SecretService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/Util/Repository/SecretRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/Util/Repository/SecretRepositoryInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/Util/Service/SecretInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/Util/Service/SecretInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/VO/SecretSecretVO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/VO/SecretSecretVO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/VO/SecretRemainingViewsVO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/VO/SecretRemainingViewsVO.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +130,7 @@
       <workItem from="1628848744589" duration="1282000" />
       <workItem from="1629116870019" duration="686000" />
       <workItem from="1629121523347" duration="1469000" />
-      <workItem from="1629135272148" duration="50473000" />
+      <workItem from="1629135272148" duration="57373000" />
     </task>
     <task id="LOCAL-00001" summary="Create first test in secret project">
       <created>1628848292306</created>
@@ -201,7 +202,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629323317094</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Secret service to ddd (first step)">
+      <created>1629325483937</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1629325483937</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

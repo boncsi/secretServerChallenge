@@ -9,9 +9,9 @@ interface SecretRepositoryInterface
 {
     public function addNew(SecretVO $secretVO) : SecretModelInterface;
 
-    //public function getSecretByHash(string $hash) : SecretModelInterface;
+    public function save(SecretVO $secretVO) : SecretModelInterface;
 
-    //public function reduceRemainingViewsCount(SecretModelInterface $secretEntity) : SecretModelInterface;
+    public function getSecretByHash(string $hash) : SecretModelInterface;
 
-    //public function getAllSecretItem() : array;
+    public function getAllSecretItem() : array;
 }

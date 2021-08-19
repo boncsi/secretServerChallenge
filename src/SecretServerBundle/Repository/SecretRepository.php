@@ -7,7 +7,7 @@ use SecretServerBundle\SecretInDDD\Domain\Util\Repository\SecretRepositoryInterf
 use SecretServerBundle\SecretInDDD\Domain\Util\Model\SecretModelInterface;
 use SecretServerBundle\Entity\Secret;
 use SecretServerBundle\SecretInDDD\Domain\VO\SecretVO;
-use \DateTimeImmutable;
+use DateTimeImmutable;
 
 /**
  * SecretRepository
@@ -40,32 +40,30 @@ class SecretRepository extends \Doctrine\ORM\EntityRepository implements SecretR
         return $secretEntity;
     }
 
-    //public function getSecretByHash($hash) : Secret
-    //{
-    //    /** @var Secret $secretItem */
-    //    $secretItem = $this->findOneBy(["hash" => $hash]);
+    public function save(SecretVO $secretVO) : SecretModelInterface
+    {
+        /** @var $secretEntity SecretModelInterface */
+        $queryBuilder  = $this->createQueryBuilder('*');
+        $entityManager = $queryBuilder->getEntityManager();
+        $secretEntity  = $this->find($secretVO->getId()->getValue());
 
-    //     return $secretItem;
-    //}
+        $secretEntity->setSecret($secretVO->getSecret()->getValue());
+        $secretEntity->setHash($secretVO->getHash()->getValue());
+        $secretEntity->setRemainingViews($secretVO->getRemainingViews()->getValue());
+        $secretEntity->setCreatedAt(new DateTimeImmutable($secretVO->getSecretCreatedAt()->getValue()));
+        $secretEntity->setExpiresAt($secretVO->getSecretExpiresAt()->getValue());
 
-    //public function reduceRemainingViewsCount(Secret $secretEntity) : Secret
-    //{
-    //    $actualRemainingViewsCount = $secretEntity->getRemainingViews();
+        $entityManager->persist($secretEntity);
+        $entityManager->flush();
 
-    //    if ($actualRemainingViewsCount == 1) {
-    //        $secretEntity->setRemainingViews(-1);
-    //    } elseif ($actualRemainingViewsCount > 1) {
-    //        $secretEntity->setRemainingViews(--$actualRemainingViewsCount);
-    //    }
+        return $secretEntity;
+    }
 
-    //    $queryBuilder  = $this->createQueryBuilder('*');
-    //    $entityManager = $queryBuilder->getEntityManager();
-
-    //    $entityManager->persist($secretEntity);
-    //    $entityManager->flush();
-
-    //    return $secretEntity;
-    //}
+    public function getSecretByHash($hash) : Secret
+    {
+        /** @var $this Secret */
+        return $this->findOneBy(["hash" => $hash]);
+    }
 
     public function getAllSecretItem() : array
     {

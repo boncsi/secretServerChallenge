@@ -3,6 +3,7 @@
 namespace SecretServerBundle\SecretInDDD\Domain\DTO;
 
 use SecretServerBundle\SecretInDDD\Domain\Util\DTO\SecretDTOInterface;
+use DateTimeImmutable;
 
 class SecretDTO implements SecretDTOInterface
 {
@@ -22,7 +23,7 @@ class SecretDTO implements SecretDTOInterface
     private $secret;
 
     /**
-     * @var \DateTimeImmutable
+     * @var DateTimeImmutable
      */
     private $createdAt;
 
@@ -109,7 +110,7 @@ class SecretDTO implements SecretDTOInterface
     /**
      * Set createdAt
      *
-     * @param \DateTimeImmutable $createdAt
+     * @param DateTimeImmutable $createdAt
      *
      * @return SecretDTO
      */
@@ -123,7 +124,7 @@ class SecretDTO implements SecretDTOInterface
     /**
      * Get createdAt
      *
-     * @return \DateTimeImmutable
+     * @return DateTimeImmutable
      */
     public function getCreatedAt()
     {

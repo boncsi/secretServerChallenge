@@ -10,5 +10,5 @@ interface SecretInterface
 
     public function createNew(Request $request) : ?array;
 
-    //public function getSecretByHash(string $hash) : array;
+    public function getSecretByHash(string $hash) : ?array;
 }

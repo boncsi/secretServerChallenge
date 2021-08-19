@@ -2,22 +2,21 @@
 
 namespace SecretServerBundle\SecretInDDD\Domain\Service;
 
-use SecretServerBundle\SecretInDDD\Domain\VO\SecretVO;
 use SecretServerBundle\Repository\SecretRepository;
-use SecretServerBundle\Entity\Secret;
+use SecretServerBundle\SecretInDDD\Domain\VO\SecretExpiresAtVO as SecretExpiresAtVO;
+use SecretServerBundle\SecretInDDD\Domain\VO\SecretIdVO as SecretIdVO;
+use SecretServerBundle\SecretInDDD\Domain\VO\SecretRemainingViewsVO as SecretRemainingViewsVO;
+use SecretServerBundle\SecretInDDD\Domain\VO\SecretSecretVO as SecretSecretVO;
+use SecretServerBundle\SecretInDDD\Domain\VO\SecretVO;
 use SecretServerBundle\SecretInDDD\Domain\Util\Service\SecretInterface;
 use SecretServerBundle\SecretInDDD\Domain\Util\Repository\SecretRepositoryInterface;
-use SecretServerBundle\SecretInDDD\Domain\VO\SecretIdVO as SecretIdVO;
 use SecretServerBundle\SecretInDDD\Domain\VO\SecretHashVO as SecretHashVO;
-use SecretServerBundle\SecretInDDD\Domain\VO\SecretSecretVO as SecretSecretVO;
-use SecretServerBundle\SecretInDDD\Domain\VO\SecretRemainingViewsVO as SecretRemainingViewsVO;
-use SecretServerBundle\SecretInDDD\Domain\VO\SecretExpiresAtVO as SecretExpiresAtVO;
 use SecretServerBundle\SecretInDDD\Domain\VO\SecretCreatedAtVO as SecretCreatedAtVO;
-use \DateTimeImmutable;
 use SecretServerBundle\SecretInDDD\Domain\Assembler\SecretAssembler;
 use SecretServerBundle\SecretInDDD\Domain\Util\DTO\SecretDTOInterface;
 use SecretServerBundle\SecretInDDD\Domain\DTO\SecretDTO;
 use SecretServerBundle\SecretInDDD\Domain\DTO\SecretFormattedAndFilledDTO;
+use DateTimeImmutable;
 
 /**
  * SecretService
@@ -103,34 +102,13 @@ class SecretService implements SecretInterface
      *
      * @param   string   $hash
      *
-     * @return array
+     * @return SecretDTOInterface
      */
-    public function getSecretByHash(string $hash) : array
+    public function getByHash(string $hash) : SecretDTOInterface
     {
-        try {
-            /* @var $secretItem Secret */
-            $secretItem = $this->_secretRepository->getSecretByHash($hash);
+        $secretAssembler = new SecretAssembler();
 
-            if (empty($secretItem)) {
-                throw new \Exception('Not be found!');
-            }
-
-            $nowDateTime = new \DateTime();
-
-            if ($secretItem->getCreatedAt() !== $this->getExpiresAtDateTime($secretItem) && $this->getExpiresAtDateTime($secretItem) < $nowDateTime) {
-                throw new \Exception('Expired - ExpiresAt!');
-            }
-
-            if ($secretItem->getRemainingViews() < 0) {
-                throw new \Exception('Expired - RemainingViews!');
-            }
-
-            $secret = $this->getFilledData($this->_secretRepository->reduceRemainingViewsCount($secretItem));
-        } catch (\Exception $e) {
-            $secret = [];
-        }
-
-        return $secret;
+        return $secretAssembler->transform($this->_secretRepository->getSecretByHash($hash));
     }
 
     /**
@@ -152,5 +130,51 @@ class SecretService implements SecretInterface
         $expiresAt = new DateTimeImmutable($secretDTO->getCreatedAt()->format('Y-m-d H:i:s'));
 
         return $expiresAt->modify("+{$secretDTO->getExpiresAt()} minutes");
+    }
+
+    /**
+     * Reduce remaining views count
+     *
+     * @param SecretDTOInterface $secretEntity
+     *
+     * @return SecretDTOInterface
+     *
+     * @throws \Exception
+     */
+    public function reduceRemainingViewsCount(SecretDTOInterface $secretDTO) : SecretDTOInterface
+    {
+        $actualRemainingViewsCount = (int) $secretDTO->getRemainingViews();
+        $secretAssembler           = new SecretAssembler();
+
+        if ($actualRemainingViewsCount == 1) {
+            $secretDTO->setRemainingViews(-1);
+        } elseif ($actualRemainingViewsCount > 1) {
+            $secretDTO->setRemainingViews(--$actualRemainingViewsCount);
+        }
+
+        $changeSecretVO = new SecretVO(
+            new SecretIdVO($secretDTO->getId()),
+            new SecretHashVO($secretDTO->getHash()),
+            new SecretSecretVO($secretDTO->getSecret()),
+            new SecretRemainingViewsVO($secretDTO->getRemainingViews()),
+            new SecretExpiresAtVO($secretDTO->getExpiresAt()),
+            new SecretCreatedAtVO(new DateTimeImmutable($secretDTO->getCreatedAt()->format('Y-m-d H:i:s')))
+        );
+
+        return $secretAssembler->transform($this->_secretRepository->save($changeSecretVO));
+    }
+
+    public function isExpired(SecretDTOInterface $secretDTO) : void
+    {
+        if ($secretDTO->getCreatedAt() !== $this->getExpiresAtDateTime($secretDTO) && $this->getExpiresAtDateTime($secretDTO) < new DateTimeImmutable()) {
+            throw new \Exception('Expired - ExpiresAt!');
+        }
+    }
+
+    public function isViewable(SecretDTOInterface $secretDTO) : void
+    {
+        if ((int) $secretDTO->getRemainingViews() < 0) {
+            throw new \Exception('Expired - RemainingViews!');
+        }
     }
 }

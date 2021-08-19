@@ -21,7 +21,7 @@ class DefaultController extends Controller
     /**
      * @Route("/secret/{hash}", name="getSecretByHash", methods={"GET","HEAD", "OPTIONS"})
      */
-    /*public function getSecretAction($hash, SecretInterface $secretService)
+    public function getSecretAction($hash, SecretInterface $secretService)
     {
         $response         = new JsonResponse();
         $secretItemByHash = $secretService->getSecretByHash($hash);
@@ -33,7 +33,7 @@ class DefaultController extends Controller
         }
 
         return $response->setStatusCode(404);
-    }*/
+    }
 
     /**
      * @Route("/secret", name="addNewSecret", methods={"POST","HEAD", "OPTIONS"})

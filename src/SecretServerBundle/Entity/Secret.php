@@ -66,18 +66,6 @@ class Secret implements SecretModelInterface
     /**
      * Get id
      *
-     * @param int $id
-     *
-     * @return int
-     */
-    public function setId($id)
-    {
-        return $this->id = $id;
-    }
-
-    /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
