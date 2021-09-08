@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="741871b5-3a5c-496f-8519-dcd6687fb54d" name="Changes" comment="Secret service to ddd (first step)">
+    <list default="true" id="741871b5-3a5c-496f-8519-dcd6687fb54d" name="Changes" comment="Secret fix part I.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/Controller/DefaultController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/Entity/Secret.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/Entity/Secret.php" afterDir="false" />
@@ -13,6 +14,13 @@
       <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/Util/Repository/SecretRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/Util/Repository/SecretRepositoryInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/Util/Service/SecretInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/Util/Service/SecretInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/VO/SecretRemainingViewsVO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/VO/SecretRemainingViewsVO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/Secret.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/Secret.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/VO/SecretCreatedAtVO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/SecretCreatedAtVO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/VO/SecretExpiresAtVO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/SecretExpiresAtVO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/VO/SecretHashVO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/SecretHashVO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/VO/SecretIdVO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/SecretIdVO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/VO/SecretRemainingViewsVO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/SecretRemainingViewsVO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/VO/SecretSecretVO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecretServerBundle/SecretInDDD/Domain/SecretSecretVO.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,6 +138,10 @@
       <workItem from="1628848744589" duration="1282000" />
       <workItem from="1629116870019" duration="686000" />
       <workItem from="1629121523347" duration="1469000" />
+      <workItem from="1629135272148" duration="57424000" />
+      <workItem from="1630516219224" duration="5722000" />
+      <workItem from="1630523043728" duration="4467000" />
+      <workItem from="1630657553568" duration="3859000" />
       <workItem from="1629135272148" duration="57373000" />
     </task>
     <task id="LOCAL-00001" summary="Create first test in secret project">
@@ -209,7 +221,21 @@
       <option name="project" value="LOCAL" />
       <updated>1629325483937</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Secret service to ddd (first step)">
+      <created>1629332440113</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1629332440113</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Secret fix part I.">
+      <created>1630529674207</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1630529674207</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,6 +269,7 @@
     <MESSAGE value="phpstrom" />
     <MESSAGE value="Secret service - unit test - fix" />
     <MESSAGE value="Secret service to ddd (first step)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Secret service to ddd (first step)" />
+    <MESSAGE value="Secret fix part I." />
+    <option name="LAST_COMMIT_MESSAGE" value="Secret fix part I." />
   </component>
 </project>

@@ -1,5 +1,17 @@
 <?php
 
+header('Access-Control-Expose-Headers: *');
+header('Access-Control-Allow-Methods: OPTIONS, POST, GET, PUT, DELETE, HEAD');
+header('Access-Control-Allow-Headers: *');
+header('Access-Control-Allow-Origin: *');
+header('Allow: GET, POST, PUT, DELETE, OPTIONS, HEAD');
+
+$method = $_SERVER['REQUEST_METHOD'];
+
+if ($method == "OPTIONS") {
+    die();
+}
+
 use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../vendor/autoload.php';
