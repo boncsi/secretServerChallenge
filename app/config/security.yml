@@ -30,6 +30,7 @@ security:
 
     access_control:
         - { path: '/secret/list', roles: ROLE_ADMIN }
+        - { path: '/api/secret/list', roles: ROLE_ADMIN }
 
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
