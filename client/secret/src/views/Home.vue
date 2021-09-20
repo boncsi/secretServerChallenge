@@ -16,13 +16,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(secret, i) in secrets" :key="i">
-            <td>{{ secret.hash }}</td>
-            <td>{{ secret.secret }}</td>
-            <td>{{ secret.remainingViews }}</td>
-            <td>{{ secret.createdAt }}</td>
-            <td>{{ secret.expiresAt }}</td>
-          </tr>
+          <template v-for="secret in secrets">
+            <secretItem :secret="secret" :key="`SecretItemId_${secret.hash}`" />
+          </template>
         </tbody>
       </table>
 
@@ -32,9 +28,15 @@
 
 <script>
   import axios from 'axios';
+  import secretItem from "@/components/secret/Item.vue";
+
 
   export default {
     name: 'secretList',
+
+    components: {
+      secretItem
+    },
 
     data() {
       return {
