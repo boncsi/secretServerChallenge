@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
+
   import SecretItem from "@/components/SecretItem.vue";
 
 
@@ -45,14 +45,9 @@
     },
 
     created() {
-      axios.get('https://firstsymfonyproject.localhost/api/secret/list', {
-        auth: {
-          username: 'boncsi',
-          password: 'Almafa123!'
-        }
-      })
-      .then(response => this.secrets = response.data)
-      .catch(err => console.log(err))
+      this.$ApiHttpClient.getHttpRequest('https://firstsymfonyproject.localhost/api/secret/list').then(
+          response => this.secrets = response.data
+      )
     }
   }
 </script>
