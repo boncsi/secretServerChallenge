@@ -17,7 +17,7 @@
         </thead>
         <tbody>
           <template v-for="secret in secrets">
-            <secretItem :secret="secret" :key="`SecretItemId_${secret.hash}`" />
+            <SecretItem :secret="secret" :key="`SecretItemId_${secret.hash}`" />
           </template>
         </tbody>
       </table>
@@ -28,14 +28,14 @@
 
 <script>
   import axios from 'axios';
-  import secretItem from "@/components/secret/Item.vue";
+  import SecretItem from "@/components/SecretItem.vue";
 
 
   export default {
     name: 'secretList',
 
     components: {
-      secretItem
+      SecretItem
     },
 
     data() {
