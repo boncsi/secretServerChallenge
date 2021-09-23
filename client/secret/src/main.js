@@ -1,10 +1,10 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import ApiHttpClient from './api/http'
+import GetSecret from './secret/client'
 
 Vue.config.productionTip = false;
-Vue.prototype.$ApiHttpClient = ApiHttpClient;
+Vue.prototype.$GetSecret = GetSecret;
 
 new Vue({
   router,

@@ -28,10 +28,9 @@
 
 <script>
 
-  import SecretItem from "@/components/SecretItem.vue";
+import SecretItem from "@/components/SecretItem.vue";
 
-
-  export default {
+export default {
     name: 'secretList',
 
     components: {
@@ -44,10 +43,10 @@
       }
     },
 
-    created() {
-      this.$ApiHttpClient.getHttpRequest('https://firstsymfonyproject.localhost/api/secret/list').then(
-          response => this.secrets = response.data
-      )
+    async created() {
+      let secrets = await this.$GetSecret('https://firstsymfonyproject.localhost/api/secret/list');
+
+      this.secrets = secrets.data;
     }
   }
 </script>
