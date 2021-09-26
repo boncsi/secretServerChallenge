@@ -18,4 +18,6 @@ const router = new VueRouter({
   routes,
 });
 
+//export const defaultPageNumber = 20;
+
 export default router;
