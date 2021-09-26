@@ -16,9 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <template v-for="secret in secrets">
-            <SecretItem :secret="secret" :key="`SecretItemId_${secret.hash}`" />
-          </template>
+          <SecretItem v-for="secret in secrets" :secret="secret" :key="`SecretItemId_${secret.hash}`" />
         </tbody>
       </table>
 
@@ -44,7 +42,7 @@ export default {
     },
 
     async created() {
-      let secrets = await this.$GetSecret('https://firstsymfonyproject.localhost/api/secret/list');
+      let secrets = await this.$GetSecret();
 
       this.secrets = secrets.data;
     }

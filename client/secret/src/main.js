@@ -1,10 +1,16 @@
 import Vue from "vue";
 import App from "./App.vue";
+
+//Hivatalos alapértelmezett import
 import router from "./router";
-import GetSecret from './secret/client'
+//A defaulton kívül, még be lehet emelni, egy ott lévő változót, vagy metódust és aliasolni azt a használathoz.
+//import router, {defaultPageNumber as DEFAULT_PAGE_NUMBER} from "./router";
+import {SecretClient} from "./api";
+
+//console.log(DEFAULT_PAGE_NUMBER);
 
 Vue.config.productionTip = false;
-Vue.prototype.$GetSecret = GetSecret;
+Vue.prototype.$GetSecret = SecretClient;
 
 new Vue({
   router,
