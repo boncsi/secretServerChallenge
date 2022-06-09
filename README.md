@@ -1,77 +1,29 @@
-Symfony Standard Edition
-========================
+# Secret Server Coding Task
 
-**WARNING**: This distribution does not support Symfony 4. See the
-[Installing & Setting up the Symfony Framework][15] page to find a replacement
-that fits you best.
+## Introduction
+Your task is to implement a secret server. The secret server can be used to store and share secrets
+using the random generated URL. But the secret can be read only a limited number of times after that
+it will expire and won’t be available. The secret may have TTL. After the expiration time the secret
+won’t be available anymore. You can find the detailed API documentation in the swagger.yaml file.
+We recommend to use [Swagger](https://editor.swagger.io/) or any other OpenAPI implementation to
+read the documentation. 
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
+[Web Link](https://github.com/ngabesz-wse/secret-server-task)
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
+## Task
+**Implementation**: You have to implement the whole Secret Server API. If it is not specified you can choose the technology
+you want to use (database, programming language, framework, etc). However it would be wise to store the data using encryption now this is not part of the task. You can use plain text to store your secrets.
 
-What's inside?
---------------
+**Response types**
+The API must be able to response with XML or JSON too, based on the [Accept header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept). Other response types (such as YAML) might be added later so prepare your code to be extandable. 
 
-The Symfony Standard Edition is configured with the following defaults:
+**Hosting**: You also have to deploy and host the service. There are plenty of free solutions to do this. So this shouldn't
+be an issue. If this API was used in production, then HTTPS would be a must but this is not the case now. It is allowed to use HTTP too.
 
-  * An AppBundle you can use to start coding;
+**Code quality matters**: We love OOP style well documented PSR compatible clean code. Automation test coverage is not a requirement but definitely is a plus.
 
-  * Twig as the only configured template engine;
+**Share the code**: Upload the code to your GitHub account and share with us.
 
-  * Doctrine ORM/DBAL;
+## Questions
+It is totaly OK to ask if something is not clear. 
 
-  * Swiftmailer;
-
-  * Annotations enabled for everything.
-
-It comes pre-configured with the following bundles:
-
-  * **FrameworkBundle** - The core Symfony framework bundle
-
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
-
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
-
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
-
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev env) - Adds code generation
-    capabilities
-
-  * [**WebServerBundle**][14] (in dev env) - Adds commands for running applications
-    using the PHP built-in web server
-
-  * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
-    integration
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  https://symfony.com/doc/3.4/setup.html
-[6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  https://symfony.com/doc/3.4/doctrine.html
-[8]:  https://symfony.com/doc/3.4/templating.html
-[9]:  https://symfony.com/doc/3.4/security.html
-[10]: https://symfony.com/doc/3.4/email.html
-[11]: https://symfony.com/doc/3.4/logging.html
-[13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
-[14]: https://symfony.com/doc/current/setup/built_in_web_server.html
-[15]: https://symfony.com/doc/current/setup.html
